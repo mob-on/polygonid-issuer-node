@@ -6,7 +6,7 @@ services:
       context: ../../ui/
       dockerfile: Dockerfile
     ports:
-      - "8088:80"
+      - "10100:80"
     env_file:
       - ../../.env-api
       - ../../.env-ui
@@ -16,7 +16,7 @@ services:
       context: ../../
       dockerfile: ${DOCKER_FILE}
     ports:
-      - "3001:3001"
+      - "10101:3001"
     env_file:
       - ../../.env-api
       - ../../.env-issuer
@@ -27,7 +27,7 @@ services:
       context: ../../
       dockerfile: ${DOCKER_FILE}
     ports:
-      - "3002:3002"
+      - "10102:3002"
     env_file:
       - ../../.env-api
       - ../../.env-issuer
