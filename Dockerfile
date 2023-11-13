@@ -18,6 +18,7 @@ RUN ln -sfv ld-linux-x86-64.so.2 /lib/libresolv.so.2
 
 RUN apk add doas; \
     adduser -S issuer -D -G wheel; \
+    mkdir -p /etc/doas.d/; \
     echo 'permit nopass :wheel as root' >> /etc/doas.d/doas.conf;
 RUN chmod g+rx,o+rx /
 
