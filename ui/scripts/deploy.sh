@@ -30,6 +30,9 @@ cat /etc/nginx/.htpasswd
 # Copy app dist
 cp -r /app/dist/. /usr/share/nginx/html
 
+find /usr/share/nginx/html -type f -exec chmod a+r {} \;
+find /usr/share/nginx/html -type d -exec chmod a+rx {} \;
+
 # Delete source code
 rm -rf /app
 
