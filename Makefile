@@ -66,23 +66,23 @@ up:
 run:
 	$(eval DELETE_FILE = $(shell if [ -f ./.env-ui ]; then echo "false"; else echo "true"; fi))
 	@if [ -f ./.env-ui ]; then echo "false"; else touch ./.env-ui; fi
-	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) up -d api pending_publisher
+	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) up --build -d api pending_publisher
 	@if [ $(DELETE_FILE) = "true" ] ; then rm ./.env-ui; fi
 
 .PHONY: run-arm
 run-arm:
 	$(eval DELETE_FILE = $(shell if [ -f ./.env-ui ]; then echo "false"; else echo "true"; fi))
 	@if [ -f ./.env-ui ]; then echo "false"; else touch ./.env-ui; fi
-	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile-arm" $(DOCKER_COMPOSE_CMD) up -d api pending_publisher
+	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile-arm" $(DOCKER_COMPOSE_CMD) up --build -d api pending_publisher
 	@if [ $(DELETE_FILE) = "true" ] ; then rm ./.env-ui; fi
 
 .PHONY: run-ui
 run-ui: add-host-url-swagger
-	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) up -d api-ui ui notifications pending_publisher
+	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile" $(DOCKER_COMPOSE_CMD) up --build -d api-ui ui notifications pending_publisher
 
 .PHONY: run-ui-arm
 run-ui-arm: add-host-url-swagger
-	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile-arm" $(DOCKER_COMPOSE_CMD) up -d api-ui ui notifications pending_publisher
+	COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_FILE="Dockerfile-arm" $(DOCKER_COMPOSE_CMD) up --build -d api-ui ui notifications pending_publisher
 	
 .PHONY: build
 build:
@@ -211,10 +211,10 @@ restart-ui-arm: rm-issuer-imgs up run-arm run-ui-arm
 
 
 ## usage: make new_password=xxx change-vault-password
-#.PHONY: change-vault-password
-#change-vault-password:
-#	docker exec issuer-vault-1 \
-#	vault write auth/userpass/users/issuernode password=$(new_password)
+.PHONY: change-vault-password
+change-vault-password:
+	docker exec issuer-vault-1 \
+	vault write auth/userpass/users/issuernode password=$(new_password)
 
 .PHONY: print-did
 print-did:
